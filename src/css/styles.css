@@ -7,6 +7,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "Montserrat", sans-serif;
+  background-color: #f0f0f0;
 }
 
 .search-form {
@@ -21,6 +23,11 @@ input {
   background: #fff;
   border: 1px solid #808080;
   margin-right: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
 }
 
 button {
@@ -30,30 +37,47 @@ button {
   height: 40px;
   background: #4e75ff;
   border: none;
-}
-.search-button {
-  font-family: "Montserrat", "Medium", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
   letter-spacing: 0.04em;
   color: #fff;
 }
-input::placeholder{
-  padding: 8px 0 8px 16px;
-  font-family: "Montserrat", "Medium", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: 0.04em;
-    color: #808080;
+
+input::placeholder {
+  color: #808080;
 }
-p {
-  margin: 0;
-  font-family: "Montserrat", "Medium", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: 0.04em;
-    color: #2e2f42;
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
+
+.gallery img {
+  width: 200px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.1);
+}
+
+.loader {
+  display: none;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

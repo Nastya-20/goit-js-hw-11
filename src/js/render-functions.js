@@ -1,35 +1,33 @@
 import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-
-const lightbox = new SimpleLightbox('.gallery a');
 
 export function renderImages(images) {
-    const galleryElement = document.getElementById('gallery');
-    galleryElement.innerHTML = ''; // Clear previous results
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '';
 
-    if (images.length === 0) {
-        iziToast.error({
-            title: 'Error',
-            message: 'Sorry, there are no images matching your search query. Please try again!',
-        });
-        return;
-    }
+  if (images.length === 0) {
+    showNoResultsMessage();
+    return;
+  }
 
-    const imageElements = images.map(image => `
-        <div class="card">
-            <a href="${image.largeImageURL}" data-lightbox="gallery">
-                <img src="${image.webformatURL}" alt="${image.tags}">
-            </a>
-            <div class="card-info">
-                <p>Likes: ${image.likes}</p>
-                <p>Views: ${image.views}</p>
-                <p>Comments: ${image.comments}</p>
-                <p>Downloads: ${image.downloads}</p>
-            </div>
-        </div>
-    `);
+  const lightbox = new SimpleLightbox('.gallery a');
 
-    galleryElement.innerHTML = imageElements.join('');
-    lightbox.refresh(); // Refresh SimpleLightbox after adding new images
+  images.forEach(image => {
+    const imgElement = document.createElement('img');
+    imgElement.src = image.webformatURL;
+    imgElement.alt = image.tags;
+    
+    const linkElement = document.createElement('a');
+    linkElement.href = image.largeImageURL;
+    linkElement.appendChild(imgElement);
+    
+    gallery.appendChild(linkElement);
+  });
+
+  lightbox.refresh();
+}
+
+function showNoResultsMessage() {
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '<p>Sorry, there are no images matching your search query. Please try again!</p>';
 }
 
