@@ -5,7 +5,8 @@ import { renderImages } from './js/render-functions.js';
 
 const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('search-input');
-const loader = document.getElementById('loader');
+const loader = document.querySelector('.loader');
+const gallery = document.getElementById('gallery');
 
 searchForm.addEventListener('submit', async function(event) {
   event.preventDefault();
@@ -20,22 +21,23 @@ searchForm.addEventListener('submit', async function(event) {
   }
 
   try {
-    showLoader();
+    showLoader(); // Показати завантажувач перед запитом
     const images = await searchImages(query);
-    hideLoader();
-    renderImages(images);
+    renderImages(images); // Відобразити зображення в галереї
   } catch (error) {
     console.error('Error searching images:', error);
     iziToast.error({
       title: 'Error',
       message: 'Failed to fetch images. Please try again later.'
     });
-    hideLoader();
+  } finally {
+    hideLoader(); // Приховати завантажувач після завершення запиту (незалежно від результату)
   }
 });
 
 function showLoader() {
   loader.style.display = 'block';
+  gallery.innerHTML = ''; // Очистити галерею перед показом нових зображень
 }
 
 function hideLoader() {
