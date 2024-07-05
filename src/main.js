@@ -14,9 +14,9 @@ searchForm.addEventListener('submit', async function(event) {
 
   if (!query) {
     iziToast.error({
-      title: 'Error',
-      message: 'Sorry, there are no images matching your search query. Please, try again!.'
-    });
+    title: 'Error',
+    message: 'Please enter a search query.'
+  });
     return;
   }
 
@@ -24,9 +24,12 @@ searchForm.addEventListener('submit', async function(event) {
     showLoader(); // Показати завантажувач перед запитом
     const images = await searchImages(query);
     renderImages(images); // Відобразити зображення в галереї
+
+     // Очистити input після успішного поишуку та рендерінга зображень
+    searchInput.value = '';
   } catch (error) {
     console.error('Error searching images:', error);
-    iziToast.error({
+      iziToast.error({
       title: 'Error',
       message: 'Failed to fetch images. Please try again later.'
     });
