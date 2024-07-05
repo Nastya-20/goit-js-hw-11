@@ -8,34 +8,36 @@ const searchInput = document.getElementById('search-input');
 const loader = document.querySelector('.loader');
 const gallery = document.getElementById('gallery');
 
-searchForm.addEventListener('submit', async function(event) {
+searchForm.addEventListener('submit', function(event) {
   event.preventDefault();
   const query = searchInput.value.trim();
 
   if (!query) {
     iziToast.error({
-    title: 'Error',
-    message: 'Please enter a search query.'
-  });
+      title: 'Error',
+      message: 'Please enter a search query.'
+    });
     return;
   }
 
-  try {
-    showLoader(); // Показати завантажувач перед запитом
-    const images = await searchImages(query);
-    renderImages(images); // Відобразити зображення в галереї
+  showLoader(); // Показати завантажувач перед запитом
+  searchImages(query)
+    .then(images => {
+      renderImages(images); // Відобразити зображення в галереї
 
-     // Очистити input після успішного поишуку та рендерінга зображень
-    searchInput.value = '';
-  } catch (error) {
-    console.error('Error searching images:', error);
+      // Очистити input після успішного пошука та рендерінга зображень
+      searchInput.value = '';
+    })
+    .catch(error => {
+      console.error('Error searching images:', error);
       iziToast.error({
-      title: 'Error',
-      message: 'Failed to fetch images. Please try again later.'
+        title: 'Error',
+        message: 'Failed to fetch images. Please try again later.'
+      });
+    })
+    .finally(() => {
+      hideLoader(); // Приховати завантажувач після завершення запиту (незалежно від результату)
     });
-  } finally {
-    hideLoader(); // Приховати завантажувач після завершення запиту (незалежно від результату)
-  }
 });
 
 function showLoader() {
