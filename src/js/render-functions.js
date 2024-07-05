@@ -1,4 +1,5 @@
 import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 export function renderImages(images) {
   const gallery = document.getElementById('gallery');
@@ -9,20 +10,23 @@ export function renderImages(images) {
     return;
   }
 
+  const markup = images.map(image => {
+    return `
+   <a href="${image.largeImageURL}" class="gallery-item">
+        <img src="${image.webformatURL}" alt="${image.tags}">
+        <div class="info">
+          <p>Likes: <span class="number">${image.likes}</span></p>
+          <p>Views: <span class="number">${image.views}</span></p>
+          <p>Comments: <span class="number">${image.comments}</span></p>
+          <p>Downloads: <span class="number">${image.downloads}</span></p>
+        </div>
+      </a>
+    `;
+  }).join('');
+  gallery.innerHTML = markup;
+
+  // Ініціалізація SimpleLightbox
   const lightbox = new SimpleLightbox('.gallery a');
-
-  images.forEach(image => {
-    const imgElement = document.createElement('img');
-    imgElement.src = image.webformatURL;
-    imgElement.alt = image.tags;
-    
-    const linkElement = document.createElement('a');
-    linkElement.href = image.largeImageURL;
-    linkElement.appendChild(imgElement);
-    
-    gallery.appendChild(linkElement);
-  });
-
   lightbox.refresh();
 }
 

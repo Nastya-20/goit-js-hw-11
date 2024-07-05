@@ -15,7 +15,7 @@ searchForm.addEventListener('submit', async function(event) {
   if (!query) {
     iziToast.error({
       title: 'Error',
-      message: 'Please enter a search keyword.'
+      message: 'Sorry, there are no images matching your search query. Please, try again!.'
     });
     return;
   }
