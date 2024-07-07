@@ -1,6 +1,18 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+let lightbox;
+
+export function initializeLightbox() {
+    lightbox = new SimpleLightbox('.gallery a');
+}
+
+export function refreshLightbox() {
+    if (lightbox) {
+        lightbox.refresh();
+    }
+}
+
 export function renderImages(images) {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '';
@@ -24,10 +36,6 @@ export function renderImages(images) {
     `;
   }).join('');
   gallery.innerHTML = markup;
-
-  // Ініціалізація SimpleLightbox
-  const lightbox = new SimpleLightbox('.gallery a');
-  lightbox.refresh();
 }
 
 function showNoResultsMessage() {

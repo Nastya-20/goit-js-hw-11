@@ -1,12 +1,15 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { searchImages } from './js/pixabay-api.js';
-import { renderImages } from './js/render-functions.js';
+import { renderImages, initializeLightbox, refreshLightbox } from './js/render-functions.js';
 
 const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('search-input');
 const loader = document.querySelector('.loader');
 const gallery = document.getElementById('gallery');
+
+// Ініціализація SimpleLightbox
+initializeLightbox();
 
 searchForm.addEventListener('submit', function(event) {
   event.preventDefault();
@@ -27,6 +30,7 @@ searchForm.addEventListener('submit', function(event) {
 
       // Очистити input після успішного пошука та рендерінга зображень
       searchInput.value = '';
+      refreshLightbox(); // Оновити SimpleLightbox
     })
     .catch(error => {
       console.error('Error searching images:', error);
